@@ -43,7 +43,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Program.cs" />
+    <Compile Include="GOL.Bussiness\display.cs" />
+    <Compile Include="GOL.contract\cell.cs" />
+    <Compile Include="GOL\Gameoflife.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
