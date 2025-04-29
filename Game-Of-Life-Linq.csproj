@@ -45,8 +45,11 @@
   <ItemGroup>
     <Compile Include="GOL.Bussiness\display.cs" />
     <Compile Include="GOL.contract\cell.cs" />
+	<Compile Include="GOL.contract\gameEngine.cs" />
     <Compile Include="GOL\Gameoflife.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+	<Compile Include="GOL\programm.cs" />
+
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
