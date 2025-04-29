@@ -1,37 +1,28 @@
+
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
-using GOL;
+using GOL.Business;
 using GOL.Contract;
 
-namespace GOL.Business
+namespace GOL
 {
-    /// <summary>
-    /// Konsolen-Applikation als Darstellungsschicht für das Game of Life.
-    /// </summary>
-    internal class Program
-    {
-        static void Main(string[] args)
-        {
-            const int width = 50;
-            const int height = 50;
+       
 
-            // Engine aus der Kernlogik
+     internal class GameOfLife
+    {
+        //Start der Simulation
+
+        public void Start(int width, int height)
+        {
             IGameEngine engine = new GameEngine();
 
-            // Beispielgrid mit definierten lebenden Zellen
-            var grid = new List<Cell>
-            {
-                new Cell { X = 1, Y = 1, IsAlive = true },
-                new Cell { X = 2, Y = 1, IsAlive = true },
-                new Cell { X = 4, Y = 1, IsAlive = true },
-                new Cell { X = 5, Y = 1, IsAlive = true },
-                new Cell { X = 6, Y = 1, IsAlive = true },
-                new Cell { X = 7, Y = 1, IsAlive = true },
-                new Cell { X = 8, Y = 1, IsAlive = true },
-                new Cell { X = 3, Y = 1, IsAlive = true }
-            };
+            //Grid Initialisierung
+            var grid = new List<Cell>();
+
+            grid = ExampleGrid(grid);
 
             // Hauptschleife zur Simulation
             while (true)
@@ -41,7 +32,6 @@ namespace GOL.Business
                 Thread.Sleep(500); // 500ms Pause für Geschwindigkeit
             }
         }
-
         private static void Render(List<Cell> grid, int width, int height)
         {
             Console.SetCursorPosition(0, 0);
@@ -58,6 +48,20 @@ namespace GOL.Business
                 Console.WriteLine();
             }
         }
+        
+        private List<Cell> ExampleGrid(List<Cell> grid)
+        {
+            // Beispielgrid mit definierten lebenden Zellen
+            grid.Add(new Cell { X = 1, Y = 1, IsAlive = true });
+            grid.Add(new Cell { X = 2, Y = 1, IsAlive = true });
+            grid.Add(new Cell { X = 4, Y = 1, IsAlive = true });
+            grid.Add(new Cell { X = 5, Y = 1, IsAlive = true });
+            grid.Add(new Cell { X = 6, Y = 1, IsAlive = true });
+            grid.Add(new Cell { X = 7, Y = 1, IsAlive = true });
+            grid.Add(new Cell { X = 8, Y = 1, IsAlive = true });
+            grid.Add(new Cell { X = 3, Y = 1, IsAlive = true });
+            return grid;
+        }
     }
+    
 }
-

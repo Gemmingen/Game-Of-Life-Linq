@@ -1,8 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using GOL.Contract;
+using GOL;
 
-namespace GOL
+namespace GOL.Business
 {
     /// <summary>
     /// Kernlogik des Game of Life implementiert das IGameEngine-Contract.
@@ -18,8 +19,7 @@ namespace GOL
                                                             var current = grid.FirstOrDefault(c => c.X == x && c.Y == y)
                                                                           ?? new Cell { X = x, Y = y, IsAlive = false };
                                                             int aliveNeighbors = CountNeighbors(grid, current, width, height);
-                                                            bool nextAlive = aliveNeighbors == 3
-                                                                             || (aliveNeighbors == 2 && current.IsAlive);
+                                                            bool nextAlive = ValidateExistence(grid, current, width, height);   
                                                             return new { current, nextAlive };
                                                         }))
                              .Where(t => t.nextAlive)
