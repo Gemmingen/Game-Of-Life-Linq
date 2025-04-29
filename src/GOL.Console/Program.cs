@@ -1,4 +1,4 @@
-
+﻿
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,9 +12,10 @@ namespace GOL
     {
         static void Main(string[] args)
         {
+            var game = new GameOfLife();
             const int width = 50;
             const int height = 50;
-            Programm.Start(width, height);
+            game.Start(width, height);
         }
     }
 }
