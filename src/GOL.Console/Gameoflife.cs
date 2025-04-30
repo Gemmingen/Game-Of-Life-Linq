@@ -1,13 +1,11 @@
+using GOL.Business;
 using GOL.Contract;
+using System; 
 
-namespace GOL.Business
+namespace GOL
 {
-
-
     public class GameOfLife
     {
-
-
         private IGameEngine _engine;
         private int _width;
         private int _height;

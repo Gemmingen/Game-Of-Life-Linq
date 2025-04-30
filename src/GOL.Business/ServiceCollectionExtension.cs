@@ -15,7 +15,6 @@ namespace GOL.Business
         public static IServiceCollection AddGameOfLife(this IServiceCollection services)
         {
             services.AddSingleton<IGameEngine, GameEngine>();
-            services.AddTransient<GameOfLife>();
             return services;
         }
     }

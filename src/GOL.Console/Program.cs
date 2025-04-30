@@ -7,7 +7,7 @@ using GOL.Business;
 using GOL.Contract;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GOL.Console
+namespace GOL
 {
     internal class Program
     {
@@ -18,6 +18,7 @@ namespace GOL.Console
 
             var serviceProvider = new ServiceCollection() //Initialisierung des ServiceProviders für Dependency Injection
             .AddGameOfLife()
+            .AddSingleton<GameOfLife>()
             .BuildServiceProvider();
 
             var game = serviceProvider.GetRequiredService<GameOfLife>();
