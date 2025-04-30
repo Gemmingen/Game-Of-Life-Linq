@@ -7,7 +7,7 @@ using GOL.Business;
 using GOL.Contract;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace GOL
+namespace GOL.Console
 {
     internal class Program
     {
@@ -17,14 +17,15 @@ namespace GOL
             .AddGameOfLife()
             .BuildServiceProvider();
 
-          
+
             var engine = serviceProvider.GetRequiredService<IGameEngine>();
 
             const int WIDTH = 50;
             const int HEIGHT = 50;
 
             
-            var game = new GameOfLife(engine, WIDTH, HEIGHT);
+            var game = serviceProvider.GetRequiredService<GameOfLife>();
+            game.SetDimensions(WIDTH, HEIGHT);
             game.Start();
         }
     }

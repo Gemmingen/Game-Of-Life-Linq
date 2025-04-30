@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using GOL.Contract;
+
+
 using Microsoft.Extensions.DependencyInjection;
 
 namespace GOL.Business
@@ -13,7 +15,8 @@ namespace GOL.Business
             public static IServiceCollection AddGameOfLife(this IServiceCollection services)
              {
               services.AddSingleton<IGameEngine, GameEngine>();
-               return services;
+              services.AddTransient<GameOfLife>();
+              return services;
            }
 }
 }

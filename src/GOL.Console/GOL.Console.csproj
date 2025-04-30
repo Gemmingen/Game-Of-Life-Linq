@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Gameoflife.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\GOL.Business\GOL.Business.csproj" />
     <ProjectReference Include="..\GOL.Contract\GOL.Contract.csproj" />
   </ItemGroup>

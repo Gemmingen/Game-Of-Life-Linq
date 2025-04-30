@@ -7,7 +7,7 @@ using System.Threading;
 using GOL.Business;
 using GOL.Contract;
 
-namespace GOL.Console
+namespace GOL.Business
 {
        
 
