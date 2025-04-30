@@ -17,7 +17,7 @@ namespace GOL
         private IGameEngine _engine;
         private int _width;
         private int _height;
-        public GameOfLife(IGameEngine engine, int width, int height)
+        public GameOfLife(int width, int height)
         {
             _engine = new GameEngine();
             _width = width;
@@ -26,8 +26,6 @@ namespace GOL
 
         public void Start(int width, int height)
         {
-            
-
             //Grid Initialisierung
             var grid = new List<Cell>();
 
