@@ -10,6 +10,8 @@ namespace GOL.Business
     /// </summary>
     public class GameEngine : IGameEngine
     {
+
+
         public List<Cell> NextGeneration(List<Cell> grid, int width, int height)
         {
             return Enumerable.Range(0, width)

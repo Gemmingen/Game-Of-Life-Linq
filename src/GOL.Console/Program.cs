@@ -12,9 +12,10 @@ namespace GOL
     {
         static void Main(string[] args)
         {
-            var game = new GameOfLife();
             const int width = 50;
             const int height = 50;
+            var engine = new GameEngine();
+            var game = new GameOfLife(engine, width, height);
             game.Start(width, height);
         }
     }
