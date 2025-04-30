@@ -1,46 +1,51 @@
-
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
 using GOL.Business;
 using GOL.Contract;
+using System; 
 
 namespace GOL
 {
-       
-
-     internal class GameOfLife
+    public class GameOfLife
     {
-        //Start der Simulation
-
-        public void Start(int width, int height)
+        private IGameEngine _engine;
+        private int _width;
+        private int _height;
+        public GameOfLife(IGameEngine engine)
         {
-            IGameEngine engine = new GameEngine();
+            _engine = engine;
+        }
 
+        public void SetDimensions(int width, int height)
+        {
+            _width = width;
+            _height = height;
+        }
+
+        //Start der Simulation
+        public void Start()
+        {
             //Grid Initialisierung
             var grid = new List<Cell>();
 
             grid = ExampleGrid(grid);
 
             // Hauptschleife zur Simulation
+
             while (true)
             {
-                Render(grid, width, height);
-                grid = engine.NextGeneration(grid, width, height);
+                Render(grid);
+                grid = _engine.NextGeneration(grid, _width, _height);
                 Thread.Sleep(500); // 500ms Pause für Geschwindigkeit
             }
         }
-        private static void Render(List<Cell> grid, int width, int height)
+        private void Render(List<Cell> grid)
         {
             Console.SetCursorPosition(0, 0);
             Console.Clear();
             Console.WriteLine("\x1b[3J");
 
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < _height; y++)
             {
-                for (int x = 0; x < width; x++)
+                for (int x = 0; x < _width; x++)
                 {
                     bool alive = grid.Any(c => c.X == x && c.Y == y && c.IsAlive);
                     Console.Write(alive ? "O " : ". ");
@@ -48,7 +53,7 @@ namespace GOL
                 Console.WriteLine();
             }
         }
-        
+
         private List<Cell> ExampleGrid(List<Cell> grid)
         {
             // Beispielgrid mit definierten lebenden Zellen
@@ -63,5 +68,5 @@ namespace GOL
             return grid;
         }
     }
-    
+
 }
