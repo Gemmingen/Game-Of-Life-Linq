@@ -13,17 +13,13 @@ namespace GOL.Console
     {
         static void Main(string[] args)
         {
-            var serviceProvider = new ServiceCollection()
+            const int WIDTH = 50;
+            const int HEIGHT = 50; //Definiere die Dimensionen des Spielfelds
+
+            var serviceProvider = new ServiceCollection() //Initialisierung des ServiceProviders für Dependency Injection
             .AddGameOfLife()
             .BuildServiceProvider();
 
-
-            var engine = serviceProvider.GetRequiredService<IGameEngine>();
-
-            const int WIDTH = 50;
-            const int HEIGHT = 50;
-
-            
             var game = serviceProvider.GetRequiredService<GameOfLife>();
             game.SetDimensions(WIDTH, HEIGHT);
             game.Start();

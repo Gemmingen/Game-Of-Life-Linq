@@ -1,20 +1,13 @@
-
-
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using GOL.Business;
 using GOL.Contract;
 
 namespace GOL.Business
 {
-       
 
-     public class GameOfLife
+
+    public class GameOfLife
     {
-       
-       
+
+
         private IGameEngine _engine;
         private int _width;
         private int _height;
@@ -38,23 +31,23 @@ namespace GOL.Business
             grid = ExampleGrid(grid);
 
             // Hauptschleife zur Simulation
-             
+
             while (true)
             {
-                Render(grid, _width, _height);
+                Render(grid);
                 grid = _engine.NextGeneration(grid, _width, _height);
                 Thread.Sleep(500); // 500ms Pause für Geschwindigkeit
             }
         }
-        private static void Render(List<Cell> grid, int width, int height)
+        private void Render(List<Cell> grid)
         {
             Console.SetCursorPosition(0, 0);
             Console.Clear();
             Console.WriteLine("\x1b[3J");
 
-            for (int y = 0; y < height; y++)
+            for (int y = 0; y < _height; y++)
             {
-                for (int x = 0; x < width; x++)
+                for (int x = 0; x < _width; x++)
                 {
                     bool alive = grid.Any(c => c.X == x && c.Y == y && c.IsAlive);
                     Console.Write(alive ? "O " : ". ");
@@ -62,7 +55,7 @@ namespace GOL.Business
                 Console.WriteLine();
             }
         }
-        
+
         private List<Cell> ExampleGrid(List<Cell> grid)
         {
             // Beispielgrid mit definierten lebenden Zellen
@@ -77,5 +70,5 @@ namespace GOL.Business
             return grid;
         }
     }
-    
+
 }
