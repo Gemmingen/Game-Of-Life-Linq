@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading;
 using GOL.Business;
 using GOL.Contract;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace GOL
 {
@@ -12,11 +13,19 @@ namespace GOL
     {
         static void Main(string[] args)
         {
-            const int width = 50;
-            const int height = 50;
-            var engine = new GameEngine();
-            var game = new GameOfLife(width, height);
-            game.Start(width, height);
+            var serviceProvider = new ServiceCollection()
+            .AddGameOfLife()
+            .BuildServiceProvider();
+
+          
+            var engine = serviceProvider.GetRequiredService<IGameEngine>();
+
+            const int WIDTH = 50;
+            const int HEIGHT = 50;
+
+            
+            var game = new GameOfLife(engine, WIDTH, HEIGHT);
+            game.Start();
         }
     }
 }

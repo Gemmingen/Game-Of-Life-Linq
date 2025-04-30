@@ -13,18 +13,20 @@ namespace GOL
 
      public class GameOfLife
     {
-        //Start der Simulation
+       
+       
         private IGameEngine _engine;
         private int _width;
         private int _height;
-        public GameOfLife(int width, int height)
+        public GameOfLife(IGameEngine engine, int width, int height)
         {
-            _engine = new GameEngine();
+            _engine = engine;
             _width = width;
             _height = height;
         }
 
-        public void Start(int width, int height)
+        //Start der Simulation
+        public void Start()
         {
             //Grid Initialisierung
             var grid = new List<Cell>();
@@ -35,8 +37,8 @@ namespace GOL
              
             while (true)
             {
-                Render(grid, width, height);
-                grid = _engine.NextGeneration(grid, width, height);
+                Render(grid, _width, _height);
+                grid = _engine.NextGeneration(grid, _width, _height);
                 Thread.Sleep(500); // 500ms Pause für Geschwindigkeit
             }
         }
