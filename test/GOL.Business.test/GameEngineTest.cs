@@ -61,6 +61,26 @@ namespace GOL.Tests
             // Assert
             Assert.Equal(expected, result);
         }
+        [Fact]
+        public void ValidateExistence_ShouldRecognizeWrappedNeighbors()
+        {
+            // Arrange
+            var cell = new Cell { X = 0, Y = 0, IsAlive = false };
+            var grid = new List<Cell>
+                {
+                  new Cell { X = 9, Y = 9, IsAlive = true },
+                  new Cell { X = 9, Y = 0, IsAlive = true },
+                  new Cell { X = 9, Y = 1, IsAlive = true }
+                };
+
+            var engine = new GameEngine();
+
+            // Act
+            bool result = engine.ValidateExistence(grid, cell, 10, 10);
+
+            // Assert
+            Assert.True(result); // Zelle sollte geboren werden
+        }
 
         [Fact]
         public void NextGeneration_ShouldUpdateGridCorrectly()
@@ -79,5 +99,6 @@ namespace GOL.Tests
             Assert.Contains(nextGen, c => c.X == 2 && c.Y == 1); // sollte leben
             Assert.Equal(3, nextGen.Count);                      // nur drei Zellen leben
         }
+       
     }
 }
