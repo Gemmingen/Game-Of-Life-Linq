@@ -99,6 +99,22 @@ namespace GOL.Tests
             Assert.Contains(nextGen, c => c.X == 2 && c.Y == 1); // sollte leben
             Assert.Equal(3, nextGen.Count);                      // nur drei Zellen leben
         }
-       
+        [Fact]
+        public void NextGeneration_ShouldUpdateAndWrapGridCorrectly()
+        {
+            var grid = new List<Cell>
+                {
+                  new Cell { X = 9, Y = 9, IsAlive = true },
+                  new Cell { X = 9, Y = 0, IsAlive = true },
+                  new Cell { X = 9, Y = 1, IsAlive = true }
+                };
+
+            var nextGen = _engine.NextGeneration(grid, 10, 10);
+
+            Assert.Contains(nextGen, c => c.X == 9 && c.Y == 0); // sollte leben
+            Assert.Contains(nextGen, c => c.X == 8 && c.Y == 0); // sollte leben
+            Assert.Contains(nextGen, c => c.X == 0 && c.Y == 0); // sollte leben
+            Assert.Equal(3, nextGen.Count);                      // nur drei Zellen leben
+        }
     }
 }
