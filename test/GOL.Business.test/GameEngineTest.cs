@@ -30,7 +30,7 @@ namespace GOL.Tests
             //assert
             Assert.Equal(2, count); // 2 lebendige Nachbarn
         }
-
+        [Fact]
         public void CountNeighbors_ShouldWrapAndReturnCorrectNumber()
         {
             //arrange
