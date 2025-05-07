@@ -14,6 +14,9 @@ namespace GOL.Forms
     {
         private const int CELL_SIZE = 16;
         private int INTERVAL = 500; //Standart Wert für die Geschwindigkeit
+        private int WIDTH = 50; //Bei Start des Forms werden die Dimensionen auf 50 gesetzt
+        private int HEIGHT = 50; 
+
         private Timer _timer;
         private List<Cell> grid = new List<Cell>();
         private readonly IGameEngine _gameEngine;
@@ -38,11 +41,11 @@ namespace GOL.Forms
                 MessageBox.Show("Bitte nur Zahlen eingeben!");
                 return;
             }
-            if (width > 50 || width < 0 || height > 50 || height < 0)//Bei Spielfeld initialisierung von über 50 kommt es zu einem Fehler
-            {
-                MessageBox.Show("Die Dimensionen müssen zwischen 0 und 50 liegen! Bitte ändern Sie die Eingaben und versuchen Sie es erneut.");
-                return;
-            }
+            /* if (width > 50 || width < 0 || height > 50 || height < 0)//Bei Spielfeld initialisierung von über 50 kommt es zu einem Fehler
+             {
+                 MessageBox.Show("Die Dimensionen müssen zwischen 0 und 50 liegen! Bitte ändern Sie die Eingaben und versuchen Sie es erneut.");
+                 return;
+             }*/
 
             grid.Clear();
             buttonPanel.Controls.Clear();
@@ -174,17 +177,12 @@ namespace GOL.Forms
             _timer.Stop();
         }
 
-        private void intervalSped_Click(object sender, EventArgs e)
-        {
-
-        }
-
         private void BuildShape(List<(int dx, int dy)> pattern)
         {
             foreach (var (dx, dy) in pattern)
             {
-                int x = (int.Parse(widthInput.Text)/2) + dx;
-                int y = (int.Parse(heightInput.Text)/2) + dy;
+                int x = (int.Parse(widthInput.Text) / 2) + dx;
+                int y = (int.Parse(heightInput.Text) / 2) + dy;
 
                 // Finde die entsprechende Zelle im Grid
                 var cell = grid.FirstOrDefault(c => c.X == x && c.Y == y);
@@ -228,13 +226,23 @@ namespace GOL.Forms
 
         private void fpentoButton_Click(object sender, EventArgs e)
         {
-            var fpentoPattern = new List<(int dx, int dy)> 
+            var fpentoPattern = new List<(int dx, int dy)>
             {
-                    (1, 0), (2, 0), 
+                    (1, 0), (2, 0),
             (0, 1), (1, 1),
                     (1, 2)
             };
             BuildShape(fpentoPattern);
+        }
+
+        private void golLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            System.Diagnostics.Process.Start("https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens");
+        }
+
+        private void intervalSped_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -1,3 +1,6 @@
+using Microsoft.Extensions.DependencyInjection;
+using GOL.Business;
+
 namespace GOL.Forms
 {
     internal static class Program
@@ -8,10 +11,15 @@ namespace GOL.Forms
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
             ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            
+            var serviceProvider = new ServiceCollection() //Initialisierung des ServiceProviders für Dependency Injection
+              .AddGameOfLife()
+              .AddSingleton<Form1>()
+              .BuildServiceProvider();
+
+            var form = serviceProvider.GetRequiredService<Form1>();
+            Application.Run(form);
         }
     }
 }
