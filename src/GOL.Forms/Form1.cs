@@ -35,13 +35,13 @@ namespace GOL.Forms
 
         private void startButton_Click(object sender, EventArgs e)
         {
-            var width = (int)widthInput.Value;
-            var height = (int)heightInput.Value;
+            var WIDTH = (int)widthInput.Value;
+            var HEIGHT = (int)heightInput.Value;
             
             grid.Clear();
             buttonPanel.Controls.Clear();
 
-            BuildButtonGrid(width, height); 
+            BuildButtonGrid(WIDTH, HEIGHT); 
             DisableInputs();
         }
 
@@ -73,10 +73,8 @@ namespace GOL.Forms
 
         private void RunNextGeneration()
         {
-            if (!int.TryParse(widthInput.Text, out int width) || !int.TryParse(heightInput.Text, out int height))
-                return;
             grid = ReadButtons();
-            grid = _gameEngine.NextGeneration(grid, width, height);
+            grid = _gameEngine.NextGeneration(grid, WIDTH, HEIGHT);
             WriteButtons();
         }
         private void BuildButtonGrid(int width, int height)
