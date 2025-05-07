@@ -35,53 +35,14 @@ namespace GOL.Forms
 
         private void startButton_Click(object sender, EventArgs e)
         {
-
-            if (!int.TryParse(widthInput.Text, out int width) || !int.TryParse(heightInput.Text, out int height))
-            {
-                MessageBox.Show("Bitte nur Zahlen eingeben!");
-                return;
-            }
-            /* if (width > 50 || width < 0 || height > 50 || height < 0)//Bei Spielfeld initialisierung von über 50 kommt es zu einem Fehler
-             {
-                 MessageBox.Show("Die Dimensionen müssen zwischen 0 und 50 liegen! Bitte ändern Sie die Eingaben und versuchen Sie es erneut.");
-                 return;
-             }*/
-
+            var width = (int)widthInput.Value;
+            var height = (int)heightInput.Value;
+            
             grid.Clear();
             buttonPanel.Controls.Clear();
 
-            for (int y = 0; y < height; y++)
-            {
-                for (int x = 0; x < width; x++)
-                {
-                    var cell = new Cell { X = x, Y = y, IsAlive = false };
-                    grid.Add(cell);
-
-                    Button b = new Button
-                    {
-                        Name = $"button_{x}_{y}",
-                        Size = new Size(CELL_SIZE, CELL_SIZE),
-                        BackColor = Color.White,
-                        Location = new Point(x * CELL_SIZE, y * CELL_SIZE),
-                        Tag = cell
-                    };
-
-                    b.Click += (s, e2) =>
-                    {
-                        var btn = (Button)s;
-                        var c = (Cell)btn.Tag;
-                        c.IsAlive = !c.IsAlive;
-                        btn.BackColor = c.IsAlive ? Color.Black : Color.White;
-                    };
-
-                    buttonPanel.Controls.Add(b);
-                }
-            }
-
-            startButton.Enabled = false;
-            heightInput.Enabled = false;
-            widthInput.Enabled = false;
-            startSim.Enabled = true;
+            BuildButtonGrid(width, height); 
+            DisableInputs();
         }
 
         private void startSim_Click(object sender, EventArgs e)
@@ -95,11 +56,8 @@ namespace GOL.Forms
             }
             else
             {
-                if (!int.TryParse(intervalInput.Text, out int interval))
-                {
-                    MessageBox.Show("Bitte nur Zahlen eingeben!");
-                    return;
-                }
+                var interval = (int)intervalInput.Value;    
+
                 _timer.Interval = interval;
                 _timer.Start();
                 buttonPanel.Enabled = false;
@@ -121,7 +79,41 @@ namespace GOL.Forms
             grid = _gameEngine.NextGeneration(grid, width, height);
             WriteButtons();
         }
+        private void BuildButtonGrid(int width, int height)
+        {
+            for (int y = 0; y < height; y++)
+            {
+                for (int x = 0; x < width; x++)
+                {
+                    var cell = new Cell { X = x, Y = y, IsAlive = false };
+                    grid.Add(cell);
 
+                    Button b = new Button
+                    {
+                        Name = $"button_{x}_{y}",
+                        Size = new Size(CELL_SIZE, CELL_SIZE),
+                        BackColor = Color.White,
+                        Location = new Point(x * CELL_SIZE, y * CELL_SIZE),
+                        Tag = cell,
+                        Margin = Padding.Empty,
+                        Padding = Padding.Empty,
+                        FlatStyle = FlatStyle.Flat,
+                        FlatAppearance = { BorderSize = 0 },
+                        AutoSize = false,
+                    };
+
+                    b.Click += (s, e2) =>
+                    {
+                        var btn = (Button)s;
+                        var c = (Cell)btn.Tag;
+                        c.IsAlive = !c.IsAlive;
+                        btn.BackColor = c.IsAlive ? Color.Black : Color.White;
+                    };
+
+                    buttonPanel.Controls.Add(b);
+                }
+            }
+        }
         private void WriteButtons()
         {
             foreach (Control ctrl in buttonPanel.Controls)
@@ -176,8 +168,15 @@ namespace GOL.Forms
             buttonPanel.Enabled = true;
             _timer.Stop();
         }
+        private void DisableInputs()
+        {
+            startButton.Enabled = false;
+            heightInput.Enabled = false;
+            widthInput.Enabled = false;
+            startSim.Enabled = true;
+        }
 
-        private void BuildShape(List<(int dx, int dy)> pattern)
+        private void SpawnShape(List<(int dx, int dy)> pattern)
         {
             foreach (var (dx, dy) in pattern)
             {
@@ -208,7 +207,7 @@ namespace GOL.Forms
                                   (2, 1),
                   (0, 2), (1, 2), (2, 2)
             };
-            BuildShape(gliderPattern);
+            SpawnShape(gliderPattern);
         }
 
         private void spaceshipButton_Click(object sender, EventArgs e)
@@ -221,7 +220,7 @@ namespace GOL.Forms
               (0, 3),              (3, 3),
 
             };
-            BuildShape(lwssPattern);
+            SpawnShape(lwssPattern);
         }
 
         private void fpentoButton_Click(object sender, EventArgs e)
@@ -232,12 +231,17 @@ namespace GOL.Forms
             (0, 1), (1, 1),
                     (1, 2)
             };
-            BuildShape(fpentoPattern);
+            SpawnShape(fpentoPattern);
         }
 
         private void golLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            System.Diagnostics.Process.Start("https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens");
+            var psi = new System.Diagnostics.ProcessStartInfo
+            {
+                FileName = "https://de.wikipedia.org/wiki/Conways_Spiel_des_Lebens",
+                UseShellExecute = true
+            };
+            System.Diagnostics.Process.Start(psi);
         }
 
         private void intervalSped_Click(object sender, EventArgs e)

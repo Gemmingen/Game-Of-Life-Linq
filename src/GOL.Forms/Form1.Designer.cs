@@ -170,6 +170,7 @@
             golLink.TabIndex = 14;
             golLink.TabStop = true;
             golLink.Text = "Game Of Life Wiki";
+            golLink.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             golLink.LinkClicked += golLink_LinkClicked;
             // 
             // widthInput

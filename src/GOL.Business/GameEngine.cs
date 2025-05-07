@@ -14,21 +14,22 @@ namespace GOL.Business
 
         public List<Cell> NextGeneration(List<Cell> grid, int width, int height)
         {
-            return Enumerable.Range(0, width)
-                 .SelectMany(x => Enumerable.Range(0, height)
-                                            .Select(y =>
-                                            {
-                                                var current = grid.FirstOrDefault(c => c.X == x && c.Y == y)
-                                                              ?? new Cell { X = x, Y = y, IsAlive = false };
-                                                bool nextAlive = ValidateExistence(grid, current, width, height);
-                                                return new Cell
-                                                {
-                                                    X = x,
-                                                    Y = y,
-                                                    IsAlive = nextAlive
-                                                };
-                                            }))
-                 .ToList();
+            return Enumerable
+                .Range(0, width)
+                .SelectMany(x => Enumerable
+                    .Range(0, height)
+                    .Select(y =>
+                    {
+                        var current = grid.FirstOrDefault(c => c.X == x && c.Y == y) ?? new Cell { X = x, Y = y, IsAlive = false };
+                        bool nextAlive = ValidateExistence(grid, current, width, height);
+                        return new Cell
+                        {
+                            X = x,
+                            Y = y,
+                            IsAlive = nextAlive
+                        };
+                    }))
+                .ToList();
         }
 
         public int CountNeighbors(List<Cell> grid, Cell cell, int width, int height)
